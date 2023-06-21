@@ -3,21 +3,22 @@ import { Router } from '@angular/router';
 import { UserService } from '../../service/user.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   constructor(private auth: UserService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  async login(user: string, password: string) {
+  async signin(user: string, password: string) {
     try {
-      await this.auth.login(user, password)
-      this.router.navigate(['home'])
+      await this.auth.signin(user, password)
+      alert('User is created')
+      this.router.navigate(['login'])
     } catch (e: any) {
       alert(e.message)
     }
