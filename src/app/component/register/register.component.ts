@@ -50,6 +50,8 @@ export class RegisterComponent implements OnInit {
         return "You must enter the password"
       case "auth/invalid-email":
         return "Put the email correctly"
+      case "auth/missing-email":
+        return "Ingrese email valid"
       default:
         return
     }
