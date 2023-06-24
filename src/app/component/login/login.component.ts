@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../../service/user.service';
+import firebase from 'firebase/compat/app';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit {
 
-  loginUsers: FormGroup
+  loginUsers: FormGroup;
+  loading: boolean = false;
 
   constructor(private fb: FormBuilder, private auth: AngularFireAuth, private toastr: ToastrService, private router: Router) {
     this.loginUsers = this.fb.group({
@@ -23,16 +24,48 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async login() {
-    try {
-      const email = this.loginUsers.value.email;
-      const password = this.loginUsers.value.password;
+  login() {
+    const email = this.loginUsers.value.email;
+    const password = this.loginUsers.value.password;
 
-      await this.auth.signInWithEmailAndPassword(email, password)
+    this.loading = true;
 
+    this.auth.signInWithEmailAndPassword(email, password).then(() => {
+      this.loading = false;
+      this.toastr.success("Acceso granted", "User Logged In")
       this.router.navigate(['home'])
-    } catch (error) {
+    }).catch((error) => {
+      console.log(error);
+      this.loading = false;
+      this.toastr.error(this.firebaseError(error.code), 'Error')
+    })
+  }
 
+
+  firebaseError(code: string) {
+    switch (code) {
+      case "auth/weak-password":
+        return "Password should be at least 6 characters"
+      case "auth/missing-password":
+        return "You must enter the password"
+      case "auth/invalid-email":
+        return "Put the email correctly"
+      case "auth/missing-email":
+        return "Ingrese email valid"
+      case "auth/wrong-password":
+        return "This password is invalid, insert the correct password"
+      default:
+        return
     }
   }
+
+
+  googleAuth() {
+    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+  }
+
+  gitHubAuth() {
+    this.auth.signInWithPopup(new firebase.auth.GithubAuthProvider())
+  }
+
 }

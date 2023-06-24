@@ -1,6 +1,6 @@
 <div class="container-fluid" id="all">
     <div class="row justify-content-center align-items-center" style="height: 100vh;">
-        <div class="col-md-6">
+        <div *ngIf="!loading" class="col-md-6">
             <div class="text-center">
                 <img src="../../../assets/usuario.png" class="img-fluid" alt="login">
                 <h1 class="title">Login</h1>
@@ -28,10 +28,10 @@
                     <p>or sign up with:</p>
                 </div>
                 <div class="text-center">
-                    <button class="btn" (click)="auth.googleAuth()">
+                    <button class="btn" (click)="googleAuth()">
                         <img src="../../../assets/google.png" alt="Login with google" class="social-icon">
                     </button>
-                    <button class="btn" (click)="auth.gitHubAuth()">
+                    <button class="btn" (click)="gitHubAuth()">
                         <img src="../../../assets/github.png" alt="Login with github" class="social-icon">
                     </button>
                     <button class="btn">
@@ -40,5 +40,6 @@
                 </div>
             </form>
         </div>
+        <app-spinner *ngIf="loading"></app-spinner>
     </div>
 </div>

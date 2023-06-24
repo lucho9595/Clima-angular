@@ -38,8 +38,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.auth.createUserWithEmailAndPassword(email, password).then((user) => {
-      console.log(user)
+    this.auth.createUserWithEmailAndPassword(email, password).then(() => {
       this.loading = false;
       this.toastr.success("User created successfully", "User Created")
       this.route.navigate(['login'])
