@@ -3,17 +3,20 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastrService } from 'ngx-toastr';
+import { CodeErrorService } from 'src/app/service/code-error.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+
 export class RegisterComponent implements OnInit {
 
-  registerForms: FormGroup
+  registerForms: FormGroup;
+  loading: boolean = false;
 
-  constructor(private fb: FormBuilder, private auth: AngularFireAuth, private route: Router, private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private auth: AngularFireAuth, private route: Router, private toastr: ToastrService, private fireBaseError: CodeErrorService) {
     this.registerForms = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
@@ -30,31 +33,21 @@ export class RegisterComponent implements OnInit {
     const repeatPassword = this.registerForms.value.repeatPassword;
     console.log(email, password, repeatPassword)
 
-    this.auth.createUserWithEmailAndPassword(email, password).then((user) => {
-      console.log(user)
-      this.toastr.success("User created")
+    if (password !== repeatPassword) {
+      this.toastr.error('The password are not identical', 'Error');
+      return;
+    }
+
+    this.loading = true;
+    this.auth.createUserWithEmailAndPassword(email, password).then(() => {
+      this.loading = false;
+      this.toastr.success("User created successfully", "User Created")
       this.route.navigate(['login'])
     }).catch((error) => {
       console.log(error)
-      this.toastr.error(this.firebaseError(error.code), 'Error')
+      this.loading = false;
+      this.toastr.error(this.fireBaseError.codeError(error.code), 'Error')
     })
-  }
-
-  firebaseError(code: string) {
-    switch (code) {
-      case "auth/email-already-in-use":
-        return "Email exists, created other email"
-      case "auth/weak-password":
-        return "Password should be at least 6 characters"
-      case "auth/missing-password":
-        return "You must enter the password"
-      case "auth/invalid-email":
-        return "Put the email correctly"
-      case "auth/missing-email":
-        return "Ingrese email valid"
-      default:
-        return
-    }
   }
 
 }

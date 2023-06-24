@@ -1,6 +1,6 @@
 <div class="container-fluid" id="all">
     <div class="row justify-content-center align-items-center" style="height: 100vh;">
-        <div class="col-md-6">
+        <div *ngIf="!loading" class="col-md-6">
             <button class="boton">
                 <a class="back" href="login">
                     <img class="imagen" src="../../../assets/flecha-izquierda.png" alt="">
@@ -13,24 +13,28 @@
             <form (ngSubmit)="register()" [formGroup]="registerForms">
                 <div class="form-floating mb-4">
                     <input type="email" class="form-control" id="floatingInput" formControlName="email"
-                        placeholder="name@example.com" #user>
+                        placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
                 </div>
 
                 <div class="form-floating mb-4">
                     <input type="password" class="form-control" id="floatingPassword" formControlName="password"
-                        placeholder="Password" #password>
+                        placeholder="Password">
                     <label for="floatingPassword">Password</label>
                 </div>
 
                 <div class="form-floating mb-4">
                     <input type="password" class="form-control" id="floatingPassword" formControlName="repeatPassword"
-                        placeholder="Repeat Password" #password>
+                        placeholder="Repeat Password">
                     <label for="floatingPassword">Repeat Password</label>
                 </div>
 
                 <!-- Submit button -->
-                <button id="log" type="submit" class="btn btn-primary btn-custom" style="width: 150px;">Register
+                <button id="log" type="submit" class="btn btn-primary btn-custom" style="width: 150px;">
+                    Register
                 </button>
             </form>
         </div>
+        <app-spinner *ngIf="loading"></app-spinner>
+    </div>
+</div>

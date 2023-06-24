@@ -1,18 +1,20 @@
 <div class="container-fluid" id="all">
     <div class="row justify-content-center align-items-center" style="height: 100vh;">
-        <div class="col-md-6">
+        <div *ngIf="!loading" class="col-md-6">
             <div class="text-center">
                 <img src="../../../assets/usuario.png" class="img-fluid" alt="login">
                 <h1 class="title">Login</h1>
             </div>
-            <form>
+            <form (ngSubmit)="login()" [formGroup]="loginUsers">
                 <div class="form-floating mb-4">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" #user>
+                    <input type="email" class="form-control" id="floatingInput" formControlName="email"
+                        placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
                 </div>
 
                 <div class="form-floating mb-4">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" #password>
+                    <input type="password" class="form-control" id="floatingPassword" formControlName="password"
+                        placeholder="Password">
                     <label for="floatingPassword">Password</label>
                 </div>
 
@@ -21,18 +23,17 @@
                     <a href="recuperar-password">Forgot password?</a>
                 </div>
 
-                <button id="log" type="button" class="btn btn-primary btn-custom" style="width: 150px;"
-                    (click)="login(user.value, password.value)">Sign in</button>
+                <button id="log" type="submit" class="btn btn-primary btn-custom" style="width: 150px;">Sign in</button>
                 <!-- Register buttons -->
                 <div class="text-center">
                     <p>Not a member? <a href="register">Register</a></p>
                     <p>or sign up with:</p>
                 </div>
                 <div class="text-center">
-                    <button class="btn" (click)="auth.googleAuth()">
+                    <button class="btn" (click)="googleAuth()">
                         <img src="../../../assets/google.png" alt="Login with google" class="social-icon">
                     </button>
-                    <button class="btn" (click)="auth.gitHubAuth()">
+                    <button class="btn" (click)="gitHubAuth()">
                         <img src="../../../assets/github.png" alt="Login with github" class="social-icon">
                     </button>
                     <button class="btn">
@@ -41,3 +42,6 @@
                 </div>
             </form>
         </div>
+        <app-spinner *ngIf="loading"></app-spinner>
+    </div>
+</div>

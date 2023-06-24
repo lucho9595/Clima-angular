@@ -15,6 +15,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { VerificarCorreoComponent } from './component/verificar-correo/verificar-correo.component';
 import { RecuperarPasswordComponent } from './component/recuperar-password/recuperar-password.component';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PageNotFoundComponent } from './component/page-not-found/page-not-found
     VerificarCorreoComponent,
     RecuperarPasswordComponent,
     PageNotFoundComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
