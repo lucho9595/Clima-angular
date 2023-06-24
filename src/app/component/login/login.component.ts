@@ -4,6 +4,7 @@ import firebase from 'firebase/compat/app';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastrService } from 'ngx-toastr';
+import { CodeErrorService } from 'src/app/service/code-error.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   loginUsers: FormGroup;
   loading: boolean = false;
 
-  constructor(private fb: FormBuilder, private auth: AngularFireAuth, private toastr: ToastrService, private router: Router) {
+  constructor(private fb: FormBuilder, private auth: AngularFireAuth, private toastr: ToastrService, private router: Router, private fireBaseError: CodeErrorService) {
     this.loginUsers = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
@@ -37,28 +38,9 @@ export class LoginComponent implements OnInit {
     }).catch((error) => {
       console.log(error);
       this.loading = false;
-      this.toastr.error(this.firebaseError(error.code), 'Error')
+      this.toastr.error(this.fireBaseError.codeError(error.code), 'Error')
     })
   }
-
-
-  firebaseError(code: string) {
-    switch (code) {
-      case "auth/weak-password":
-        return "Password should be at least 6 characters"
-      case "auth/missing-password":
-        return "You must enter the password"
-      case "auth/invalid-email":
-        return "Put the email correctly"
-      case "auth/missing-email":
-        return "Ingrese email valid"
-      case "auth/wrong-password":
-        return "This password is invalid, insert the correct password"
-      default:
-        return
-    }
-  }
-
 
   googleAuth() {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
