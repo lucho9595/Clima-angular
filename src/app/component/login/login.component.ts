@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from '../../service/user.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,29 +11,28 @@ import firebase from 'firebase/compat/app';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private afAuth: AngularFireAuth) { }
+  loginUsers: FormGroup
+
+  constructor(private fb: FormBuilder, private auth: AngularFireAuth, private toastr: ToastrService, private router: Router) {
+    this.loginUsers = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    })
+  }
 
   ngOnInit(): void {
-
   }
 
-  loginWithGitHub() {
-    this.afAuth.signInWithPopup(new firebase.auth.GithubAuthProvider())
-      .then((result) => {
-        // Aquí puedes manejar la respuesta exitosa y redirigir o realizar otras acciones necesarias
-      })
-      .catch((error) => {
-        // Aquí puedes manejar errores de inicio de sesión
-      });
-  }
+  async login() {
+    try {
+      const email = this.loginUsers.value.email;
+      const password = this.loginUsers.value.password;
 
-  loginWithGoogle() {
-    this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then((result) => {
-        // Aquí puedes manejar la respuesta exitosa y redirigir o realizar otras acciones necesarias
-      })
-      .catch((error) => {
-        // Aquí puedes manejar errores de inicio de sesión
-      });
+      await this.auth.signInWithEmailAndPassword(email, password)
+
+      this.router.navigate(['home'])
+    } catch (error) {
+
+    }
   }
 }
