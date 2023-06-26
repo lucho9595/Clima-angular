@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fireBaseError: CodeErrorService) {
     this.loginUsers = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
     })
   }
 
@@ -36,10 +36,13 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
 
-    this.auth.signInWithEmailAndPassword(email, password).then(() => {
-      this.loading = false;
-      this.toastr.success("Acceso granted", "User Logged In")
-      this.router.navigate(['home'])
+    this.auth.signInWithEmailAndPassword(email, password).then((user) => {
+      if (user.user?.emailVerified) {
+        this.toastr.success("Acceso granted", "User Logged In")
+        this.router.navigate(['home'])
+      } else {
+        this.router.navigate(['verificar-correo'])
+      }
     }).catch((error) => {
       console.log(error);
       this.loading = false;

@@ -21,3 +21,11 @@
   text-align: center;
   background-color: blanchedalmond;
 }
+
+.form-floating {
+  text-align: start;
+}
+
+.errorLabel {
+  margin-left: 5px;
+}

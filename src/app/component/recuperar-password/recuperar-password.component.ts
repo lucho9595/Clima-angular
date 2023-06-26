@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import firebase from 'firebase/compat/app';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastrService } from 'ngx-toastr';
@@ -21,7 +20,7 @@ export class RecuperarPasswordComponent implements OnInit {
     private router: Router,
     private fireBaseError: CodeErrorService) {
     this.recoverUser = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
     })
   }
 
@@ -41,4 +40,4 @@ export class RecuperarPasswordComponent implements OnInit {
       this.toastr.error(this.fireBaseError.codeError(error.code), 'Error')
     })
   }
-}
+};

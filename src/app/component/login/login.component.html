@@ -10,6 +10,15 @@
                     <input type="email" class="form-control" id="floatingInput" formControlName="email"
                         placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
+                    <span *ngIf="loginUsers.get('email')?.hasError('required') && loginUsers.get('email')?.touched"
+                        class="text-danger errorLabel">
+                        The <strong>email</strong> is required
+                    </span>
+                    <span *ngIf="loginUsers.get('email')?.hasError('email') && loginUsers.get('email')?.touched"
+                        class="text-danger errorLabel">
+                        The <strong>email</strong> is invalid
+                    </span>
+
                 </div>
 
                 <div class="form-floating mb-4">
@@ -23,7 +32,10 @@
                     <a href="recuperar-password">Forgot password?</a>
                 </div>
 
-                <button id="log" type="submit" class="btn btn-primary btn-custom" style="width: 150px;">Sign in</button>
+                <button id="log" type="submit" class="btn btn-primary btn-custom" style="width: 150px;"
+                    [disabled]="loginUsers.invalid">
+                    Sign in
+                </button>
                 <!-- Register buttons -->
                 <div class="text-center">
                     <p>Not a member? <a href="register">Register</a></p>

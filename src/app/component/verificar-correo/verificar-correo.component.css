@@ -1,0 +1,37 @@
+.img-fluid {
+    height: 110px;
+    padding: 10px;
+}
+
+.title {
+    font-size: 31px;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100vh;
+}
+
+#all {
+    text-align: center;
+    background-color: blanchedalmond;
+}
+
+.back {
+    text-decoration: none;
+    color: black;
+}
+
+.boton {
+    border: none;
+    background-color: transparent;
+}
+
+.imagen {
+    height: 50px;
+}

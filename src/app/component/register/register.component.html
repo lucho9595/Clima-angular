@@ -15,12 +15,31 @@
                     <input type="email" class="form-control" id="floatingInput" formControlName="email"
                         placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
+                    <span
+                        *ngIf="registerForms.get('email')?.hasError('required') && registerForms.get('email')?.touched"
+                        class="text-danger errorLabel">
+                        The <strong>email</strong> is required
+                    </span>
+                    <span *ngIf="registerForms.get('email')?.hasError('email') && registerForms.get('email')?.touched"
+                        class="text-danger errorLabel">
+                        The <strong>email</strong> is invalid
+                    </span>
                 </div>
 
                 <div class="form-floating mb-4">
                     <input type="password" class="form-control" id="floatingPassword" formControlName="password"
                         placeholder="Password">
                     <label for="floatingPassword">Password</label>
+                    <span
+                        *ngIf="registerForms.get('password')?.hasError('required') && registerForms.get('password')?.touched"
+                        class="text-danger errorLabel">
+                        The <strong>password</strong> is required
+                    </span>
+                    <span
+                        *ngIf="registerForms.get('password')?.hasError('minlength') && registerForms.get('password')?.touched"
+                        class="text-danger errorLabel">
+                        The <strong>password</strong> is short, minimum 6 characters.
+                    </span>
                 </div>
 
                 <div class="form-floating mb-4">
@@ -30,7 +49,8 @@
                 </div>
 
                 <!-- Submit button -->
-                <button id="log" type="submit" class="btn btn-primary btn-custom" style="width: 150px;">
+                <button id="log" type="submit" class="btn btn-primary btn-custom" style="width: 150px;"
+                    [disabled]="registerForms.invalid">
                     Register
                 </button>
             </form>
