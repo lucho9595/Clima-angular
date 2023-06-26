@@ -16,6 +16,7 @@ import { VerificarCorreoComponent } from './component/verificar-correo/verificar
 import { RecuperarPasswordComponent } from './component/recuperar-password/recuperar-password.component';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
