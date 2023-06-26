@@ -16,7 +16,11 @@ export class RegisterComponent implements OnInit {
   registerForms: FormGroup;
   loading: boolean = false;
 
-  constructor(private fb: FormBuilder, private auth: AngularFireAuth, private route: Router, private toastr: ToastrService, private fireBaseError: CodeErrorService) {
+  constructor(private fb: FormBuilder,
+    private auth: AngularFireAuth,
+    private route: Router,
+    private toastr: ToastrService,
+    private fireBaseError: CodeErrorService) {
     this.registerForms = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
