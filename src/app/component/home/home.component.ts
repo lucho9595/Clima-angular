@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { HttpClient } from '@angular/common/http';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { WeatherService } from 'src/app/service/weather.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -12,26 +13,29 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class HomeComponent implements OnInit {
   dataUser: any;
   locations: FormGroup;
-  apiKey: string = 'fc2e233c8a4315260cb8626363899191';
+  weathersData: any;
+  filteredCities: string[] = [];
 
   constructor(
     private router: Router,
     private auth: AngularFireAuth,
-    private http: HttpClient
-  ) { }
+    private formBuilder: FormBuilder,
+    private weather: WeatherService
+  ) {
+  }
 
   ngOnInit(): void {
-    this.locations = new FormGroup({
-      city: new FormControl('')
+    this.locations = this.formBuilder.group({
+      location: [''],
     })
-    // this.auth.currentUser.then((user) => {
-    //   if (user && user?.emailVerified) {
-    //     this.dataUser = user
-    //     console.log(this.dataUser)
-    //   } else {
-    //     this.router.navigate(['login'])
-    //   }
-    // })
+    this.auth.currentUser.then((user) => {
+      if (user && user?.emailVerified) {
+        this.dataUser = user
+        console.log(this.dataUser)
+      } else {
+        this.router.navigate(['login'])
+      }
+    })
   }
 
   logOut() {
@@ -41,8 +45,13 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  onSubmit() {
-    console.log(this.locations)
+  sendToApi(formValues: any) {
+    this.weather.getWeather(formValues.location).pipe(
+      map(infos => {
+        this.weathersData = infos;
+        console.log(this.weathersData);
+      })
+    ).subscribe();
+    this.locations.get('location')?.reset();
   }
-
 }

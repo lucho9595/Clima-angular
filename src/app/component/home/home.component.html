@@ -1,25 +1,34 @@
-<nav class="py-2 bg-body-tertiary border-bottom">
-    <div class="container d-flex flex-wrap">
-        <ul class="nav me-auto">
-            <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2 active"
-                    aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">About</a></li>
-        </ul>
-        <ul class="nav">
-            <button type="button" class="btn btn-outline-primary me-2" (click)="logOut()">Log Out</button>
-        </ul>
+<div class="all">
+    <nav class="py-2 bg-body-tertiary border-bottom">
+        <div class="container d-flex flex-wrap">
+            <ul class="nav">
+                <button type="button" class="btn btn-outline-primary me-2" (click)="logOut()">Log Out</button>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-3">
+        <div class="d-flex align-items-center justify-content-between">
+            <span class="fs-4" style="white-space: nowrap;">Clima-App</span>
+            <form class="w-100 me-3" role="search" [formGroup]="locations" (ngSubmit)="sendToApi(locations.value)">
+                <input type="search" class="form-control ms-2 me-2" placeholder="Search..." aria-label="Search"
+                    formControlName="location">
+            </form>
+            <p class="m-0">Welcome, {{dataUser?.email}}</p>
+        </div>
     </div>
-</nav>
-<div class="container mt-3">
-    <div class="d-flex align-items-center justify-content-between">
-        <span class="fs-4" style="white-space: nowrap;">Clima-App</span>
-        <form class="w-100 me-3" role="search" [formGroup]="locations" (ngSubmit)="onSubmit()">
-            <input type="search" class="form-control ms-2 me-2" formControlName="city" placeholder="Search..."
-                aria-label="Search">
-        </form>
-        <p class="m-0">Welcome, {{dataUser?.email}}</p>
+    <div class="card" id="list">
+        <div class="card text-white bg-primary" style="max-width: 18rem;">
+            <div class="card-header text-center">
+                <h3 class="card-title">Name City: {{weathersData?.name}}</h3>
+                <p>Image</p>
+            </div>
+            <div class="card-body">
+                <p class="list-group-item">Temperature Max:{{weathersData?.main.temp_max}}</p>
+                <p class="list-group-item">Temperature Min:{{weathersData?.main.temp_min}}</p>
+                <p class="list-group-item">Feels Like: {{weathersData?.main.feels_like}}</p>
+                <p class="list-group-item">Pressure: {{weathersData?.main.pressure}}</p>
+                <p class="list-group-item">Humidity: {{weathersData?.main.humidity}}</p>
+            </div>
+        </div>
     </div>
 </div>

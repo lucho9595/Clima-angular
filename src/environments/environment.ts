@@ -21,7 +21,9 @@ export const environment = {
     messagingSenderId: "654000265003",
     appId: "1:654000265003:web:1ac1f22d7fa6c89e72d76e",
     measurementId: "G-ND18RM8PVT"
-  }
+  },
+  API_KEY: 'fc2e233c8a4315260cb8626363899191',
+  API_URL: 'https://api.openweathermap.org/data/2.5/'
 };
 
 /*

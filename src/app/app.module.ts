@@ -17,6 +17,7 @@ import { RecuperarPasswordComponent } from './component/recuperar-password/recup
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { HttpClientModule } from '@angular/common/http';
+import { WeatherService } from './service/weather.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFirestoreModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [WeatherService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
