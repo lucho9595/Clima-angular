@@ -21,6 +21,9 @@
             <div class="card-header text-center">
                 <h3 class="card-title">Name City: {{weathersData?.name}}</h3>
                 <p>Image</p>
+                <img *ngIf="weathersData?.weather[0]?.main === 'Clear'" src="../../../assets/sunny.jpg" alt="Clear">
+                <img *ngIf="weathersData?.weather[0]?.main === 'Clouds'" src="../../../assets/sunny.jpg" alt="Clouds">
+                <img *ngIf="weathersData?.weather[0]?.main === 'Rain'" src="../../../assets/sunny.jpg" alt="Rain">
             </div>
             <div class="card-body">
                 <p class="list-group-item">Temperature Max:{{weathersData?.main.temp_max}}</p>
