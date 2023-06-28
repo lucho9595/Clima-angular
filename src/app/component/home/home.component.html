@@ -1,37 +1,51 @@
-<div class="all">
-    <nav class="py-2 bg-body-tertiary border-bottom">
-        <div class="container d-flex flex-wrap">
+<div class="all" [class.dark-mode]="darkModeActive">
+    <nav class="py-2 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center align-items-center">
             <ul class="nav">
                 <button type="button" class="btn btn-outline-primary me-2" (click)="logOut()">Log Out</button>
             </ul>
+            <mat-slide-toggle class="slide" [(ngModel)]="darkModeActive" (ngModelChange)="applyDarkModeStyles()">
+                Dark Mode
+            </mat-slide-toggle>
         </div>
     </nav>
-    <div class="container mt-3">
-        <div class="d-flex align-items-center justify-content-between">
-            <span class="fs-4" style="white-space: nowrap;">Clima-App</span>
+    <div class="container  mt-3">
+        <div class="contain">
+            <span class="title fs-4" style="white-space: nowrap;">Clima-App</span>
             <form class="w-100 me-3" role="search" [formGroup]="locations" (ngSubmit)="sendToApi(locations.value)">
                 <input type="search" class="form-control ms-2 me-2" placeholder="Search..." aria-label="Search"
                     formControlName="location">
             </form>
-            <p class="m-0">Welcome, {{dataUser?.email}}</p>
+            <p class="m-0">Welcome, <strong>{{dataUser?.email}}</strong></p>
         </div>
     </div>
-    <div class="card" id="list">
-        <div class="card text-white bg-primary" style="max-width: 18rem;">
+    <div class="card" id="list" *ngIf="weathersData && !loading">
+        <div class="card text-black bg-info-subtle" style="max-width: 18rem;">
             <div class="card-header text-center">
-                <h3 class="card-title">Name City: {{weathersData?.name}}</h3>
-                <p>Image</p>
-                <img *ngIf="weathersData?.weather[0]?.main === 'Clear'" src="../../../assets/sunny.jpg" alt="Clear">
-                <img *ngIf="weathersData?.weather[0]?.main === 'Clouds'" src="../../../assets/sunny.jpg" alt="Clouds">
-                <img *ngIf="weathersData?.weather[0]?.main === 'Rain'" src="../../../assets/sunny.jpg" alt="Rain">
+                <div class="contain2">
+                    <img class="ubi" src="../../../assets/marcador-de-posicion.png" alt="ubication">
+                    <h3 class="card-title"><strong>{{weathersData?.name}}</strong></h3>
+                </div>
+                <img class="imagen" *ngIf="weathersData?.weather[0]?.main === 'Clear'" src="../../../assets/dom.png"
+                    alt="Clear">
+                <img class="imagen" *ngIf="weathersData?.weather[0]?.main === 'Clouds'" src="../../../assets/nube.png"
+                    alt="Clouds">
+                <img class="imagen" *ngIf="weathersData?.weather[0]?.main === 'Rain'" src="../../../assets/lluvia.png"
+                    alt="Rain">
+                <img class="imagen" *ngIf="weathersData?.weather[0]?.main === 'Haze'"
+                    src="../../../assets/neblinoso.png" alt="Haze">
+                <img class="imagen" *ngIf="weathersData?.weather[0]?.main === 'Mist'" src="../../../assets/Mist.png"
+                    alt="Mist">
+
             </div>
             <div class="card-body">
-                <p class="list-group-item">Temperature Max:{{weathersData?.main.temp_max}}</p>
-                <p class="list-group-item">Temperature Min:{{weathersData?.main.temp_min}}</p>
+                <p class="list-group-item">Temperature Max:{{weathersData?.main.temp_max}}°</p>
+                <p class="list-group-item">Temperature Min:{{weathersData?.main.temp_min}}°</p>
                 <p class="list-group-item">Feels Like: {{weathersData?.main.feels_like}}</p>
                 <p class="list-group-item">Pressure: {{weathersData?.main.pressure}}</p>
-                <p class="list-group-item">Humidity: {{weathersData?.main.humidity}}</p>
+                <p class="list-group-item">Humidity: {{weathersData?.main.humidity}}%</p>
             </div>
         </div>
     </div>
+    <app-spinner *ngIf="loading"></app-spinner>
 </div>

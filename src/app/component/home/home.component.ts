@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   locations: FormGroup;
   weathersData: any;
   filteredCities: string[] = [];
+  darkModeActive: boolean = false;
+  loading: boolean = false;
 
   constructor(
     private router: Router,
@@ -46,12 +48,25 @@ export class HomeComponent implements OnInit {
   }
 
   sendToApi(formValues: any) {
+    this.loading = true; // Mostrar el loading
     this.weather.getWeather(formValues.location).pipe(
       map(infos => {
         this.weathersData = infos;
         console.log(this.weathersData);
       })
-    ).subscribe();
+    ).subscribe(() => {
+      this.loading = false; // Ocultar el loading después de la respuesta
+    });
     this.locations.get('location')?.reset();
+  }
+
+  applyDarkModeStyles() {
+    const body = document.getElementsByTagName('body')[0];
+
+    if (this.darkModeActive) {
+      body.classList.add('dark-mode');
+    } else {
+      body.classList.remove('dark-mode');
+    }
   }
 }

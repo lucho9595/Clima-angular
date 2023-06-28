@@ -18,7 +18,7 @@ import { PageNotFoundComponent } from './component/page-not-found/page-not-found
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WeatherService } from './service/weather.service';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +40,8 @@ import { WeatherService } from './service/weather.service';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSlideToggleModule
   ],
   providers: [WeatherService],
   bootstrap: [AppComponent]
