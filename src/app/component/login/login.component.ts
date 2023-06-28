@@ -53,16 +53,7 @@ export class LoginComponent implements OnInit {
   googleAuth() {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then(() => {
-        this.router.navigate(['home']);
-      })
-      .catch((error) => {
-        console.log(error)
-      });
-  }
-
-  gitHubAuth() {
-    this.auth.signInWithPopup(new firebase.auth.GithubAuthProvider())
-      .then(() => {
+        this.toastr.success("Acceso granted", "User Logged In")
         this.router.navigate(['home']);
       })
       .catch((error) => {
