@@ -62,7 +62,12 @@ export class LoginComponent implements OnInit {
 
   gitHubAuth() {
     this.auth.signInWithPopup(new firebase.auth.GithubAuthProvider())
-    this.router.navigate(['home'])
+      .then(() => {
+        this.router.navigate(['home']);
+      })
+      .catch((error) => {
+        console.log(error)
+      });
   }
 
 }
